@@ -1,0 +1,40 @@
+# Non-routine queries for the Four Images Studio 
+
+-- 1. Photographers available in the weekends 
+SELECT PfirstName, PLastName, Availability
+FROM Photographer
+WHERE Availability LIKE '%Saturday%' OR Availability LIKE '%Sunday%';
+
+--  2. Average rating for each service type provided by the studio
+SELECT s.Type, AVG(ig.Rating) AS AverageRating
+FROM Service s
+LEFT JOIN isGiven ig ON s.ServiceID = ig.ServiceID
+GROUP BY s.Type;
+
+
+-- 3. total revenue made by the business 
+SELECT SUM(total_amount) AS TotalRevenue
+FROM (
+    SELECT SUM(amount_in_$) AS total_amount
+    FROM Payment
+    UNION 
+    SELECT SUM(deposit_in_$)
+    FROM Contract
+) AS revenue;
+
+-- 4. clients that havent made the final full payment yet 
+SELECT c.ClientID, c.ClientlastName, c.ClientfirstName
+FROM Client c
+WHERE c.ClientID 
+NOT IN (SELECT p.ClientID FROM Payment p);
+    
+-- 5. the top 3 highest rated services in the Studio
+SELECT Type, AverageRating
+FROM (
+    SELECT s.Type, AVG(ig.Rating) AS AverageRating
+    FROM Service s
+    LEFT JOIN isGiven ig ON s.ServiceID = ig.ServiceID
+    GROUP BY s.Type
+    ORDER BY AVG(ig.Rating) DESC
+    LIMIT 3
+) AS HighestRatedService;
