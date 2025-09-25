@@ -22,14 +22,14 @@ A fully designed and implemented **ride-booking application database** (inspired
 
 
 ## ⚡ Performance Optimizations
-- ✅ **Indexes** on frequently queried fields (names, emails, ride status, dates).  
-- ✅ **Materialized Views** for real-time dashboards:
+- **Indexes** on frequently queried fields (names, emails, ride status, dates).  
+- **Materialized Views** for real-time dashboards:
   - Active rides view  
   - Driver ratings summary  
   - Passenger ride history  
   - Daily ride summary  
   - Peak hours analysis  
-- ✅ **Stored Procedures**:
+- **Stored Procedures**:
   - `GetPassengerRideHistory()` – fetch passenger’s ride history with ratings/feedback.  
   - `CalculateDriverEarnings()` – earnings summary for drivers over time.  
 
